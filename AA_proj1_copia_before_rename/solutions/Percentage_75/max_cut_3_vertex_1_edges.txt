@@ -1,0 +1,7 @@
+GRAPH WITH 3 NODES 
+
+3 vertices: [['A', [9, 3]], ['B', [4, 6]], ['C', [14, 1]]]
+1 edges : [['A', 'C']]
+
+Adjacency list: {'A': ['C'], 'C': ['A']}
+This problem is not solvable, it has isolated vertices.

@@ -1,0 +1,10 @@
+GRAPH WITH 8 NODES 
+
+These are the vertices: [['A', [2, 19]], ['B', [18, 2]], ['C', [8, 7]], ['D', [4, 17]], ['E', [12, 19]], ['F', [20, 2]], ['G', [3, 12]], ['H', [11, 19]]]
+These are the edges: [['D', 'A'], ['E', 'A'], ['B', 'A'], ['D', 'G'], ['B', 'G'], ['E', 'H'], ['C', 'G'], ['D', 'F'], ['E', 'F'], ['F', 'H'], ['B', 'C'], ['A', 'C'], ['H', 'C']]
+
+WITH THE BRUTE FORCE ALGORITHM: 
+The maximum weight cut is 162 from the vertices A,G,C,F
+This is the adjacency list: {'D': ['A', 'G', 'F'], 'A': ['D', 'E', 'B', 'C'], 'E': ['A', 'H', 'F'], 'B': ['A', 'G', 'C'], 'G': ['D', 'B', 'C'], 'H': ['E', 'F', 'C'], 'C': ['G', 'B', 'A', 'H'], 'F': ['D', 'E', 'H']}
+
+TOTAL EXECUTION TIME: 0.013775110244750977s

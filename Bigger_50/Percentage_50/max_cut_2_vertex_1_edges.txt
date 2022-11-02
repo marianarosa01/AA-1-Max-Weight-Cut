@@ -1,0 +1,10 @@
+GRAPH WITH 2 NODES 
+
+These are the vertices: [['A', [15, 11]], ['B', [12, 5]]]
+These are the edges: [['A', 'B']]
+
+WITH THE BRUTE FORCE ALGORITHM: 
+The maximum weight cut is 7 from the vertices A
+This is the adjacency list: {'A': ['B'], 'B': ['A']}
+
+TOTAL EXECUTION TIME: 2.193450927734375e-05s

@@ -1,0 +1,23 @@
+GRAPH WITH 4 NODES 
+
+4 vertices: [['A', [3, 19]], ['B', [4, 18]], ['C', [7, 4]], ['D', [12, 3]]]
+2 edges : [['C', 'A'], ['B', 'D']]
+
+Adjacency list: {'C': ['A'], 'A': ['C'], 'B': ['D'], 'D': ['B']}
+Weight list: {('C', 'A'): 16, ('B', 'D'): 17}
+WITH THE BRUTE FORCE ALGORITHM: 
+Maximum weight cut: 33
+Subset S: ['C', 'B']
+Subset T: ['A', 'D']
+NUMBER OF ITERATIONS: 10
+
+TOTAL EXECUTION TIME: 5.91278076171875e-05s 
+
+WITH THE GREEDY ALGORITHM: 
+Maximum weight cut: 17
+Subset S: ['B']
+Subset T: ['D']
+NUMBER OF ITERATIONS: 0
+
+TOTAL EXECUTION TIME: 1.239776611328125e-05s
+

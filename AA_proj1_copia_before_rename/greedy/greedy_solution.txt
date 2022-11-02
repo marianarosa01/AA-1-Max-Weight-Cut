@@ -1,0 +1,10 @@
+GRAPH WITH 5 NODES 
+
+These are the 5 vertices: (['A', [9, 6]], ['B', [12, 14]], ['C', [15, 19]], ['D', [10, 19]], ['E', [19, 17]])
+These are the 4 edges : [['C', 'E'], ['A', 'B'], ['C', 'A'], ['C', 'B']]
+
+WITH THE BRUTE FORCE ALGORITHM: 
+The maximum weight cut is B from the vertices C
+This is the adjacency list: {'C': ['E', 'A', 'B'], 'E': ['C'], 'A': ['B', 'C'], 'B': ['A', 'C']}
+
+TOTAL EXECUTION TIME: 0.0001704692840576172s

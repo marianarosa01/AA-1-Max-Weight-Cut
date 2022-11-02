@@ -1,0 +1,23 @@
+GRAPH WITH 6 NODES 
+
+6 vertices: [['A', [16, 1]], ['B', [5, 16]], ['C', [19, 5]], ['D', [3, 12]], ['E', [7, 14]], ['F', [17, 12]]]
+8 edges : [['A', 'E'], ['D', 'B'], ['B', 'E'], ['A', 'D'], ['D', 'F'], ['D', 'E'], ['C', 'B'], ['B', 'A']]
+
+Adjacency list: {'A': ['E', 'D', 'B'], 'E': ['A', 'B', 'D'], 'D': ['B', 'A', 'F', 'E'], 'B': ['D', 'E', 'C', 'A'], 'F': ['D'], 'C': ['B']}
+Weight list: {('A', 'E'): 16, ('D', 'B'): 4, ('B', 'E'): 3, ('A', 'D'): 17, ('D', 'F'): 14, ('D', 'E'): 4, ('C', 'B'): 18, ('B', 'A'): 19}
+WITH THE BRUTE FORCE ALGORITHM: 
+Maximum weight cut: 84
+Subset S: ['A', 'F', 'C']
+Subset T: ['B', 'D', 'E']
+NUMBER OF ITERATIONS: 41
+
+TOTAL EXECUTION TIME: 0.0003008842468261719s 
+
+WITH THE GREEDY ALGORITHM: 
+Maximum weight cut: 44
+Subset S: ['B']
+Subset T: ['A', 'C', 'D', 'E', 'F']
+NUMBER OF ITERATIONS: 6
+
+TOTAL EXECUTION TIME: 2.5033950805664062e-05s
+

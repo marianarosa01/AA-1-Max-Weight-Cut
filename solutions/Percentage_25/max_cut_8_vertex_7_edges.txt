@@ -1,0 +1,7 @@
+GRAPH WITH 8 NODES 
+
+8 vertices: [['A', [9, 19]], ['B', [20, 19]], ['C', [20, 19]], ['D', [18, 7]], ['E', [7, 7]], ['F', [2, 10]], ['G', [3, 20]], ['H', [5, 1]]]
+7 edges : [['G', 'A'], ['A', 'F'], ['A', 'D'], ['H', 'E'], ['E', 'A'], ['D', 'H'], ['F', 'G']]
+
+Adjacency list: {'G': ['A', 'F'], 'A': ['G', 'F', 'D', 'E'], 'F': ['A', 'G'], 'D': ['A', 'H'], 'H': ['E', 'D'], 'E': ['H', 'A']}
+This problem is not solvable, it has isolated vertices.

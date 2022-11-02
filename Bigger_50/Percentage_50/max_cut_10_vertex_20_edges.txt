@@ -1,0 +1,10 @@
+GRAPH WITH 10 NODES 
+
+These are the vertices: [['A', [2, 3]], ['B', [10, 13]], ['C', [19, 3]], ['D', [9, 15]], ['E', [3, 6]], ['F', [19, 2]], ['G', [20, 14]], ['H', [4, 17]], ['I', [4, 14]], ['J', [18, 20]]]
+These are the edges: [['D', 'I'], ['A', 'F'], ['H', 'A'], ['H', 'E'], ['E', 'B'], ['C', 'B'], ['F', 'E'], ['A', 'D'], ['I', 'G'], ['A', 'B'], ['H', 'J'], ['D', 'E'], ['I', 'F'], ['I', 'C'], ['D', 'B'], ['H', 'F'], ['C', 'G'], ['H', 'I'], ['F', 'J'], ['H', 'B']]
+
+WITH THE BRUTE FORCE ALGORITHM: 
+The maximum weight cut is 243 from the vertices D,I,F,H,B
+This is the adjacency list: {'D': ['I', 'A', 'E', 'B'], 'I': ['D', 'G', 'F', 'C', 'H'], 'A': ['F', 'H', 'D', 'B'], 'F': ['A', 'E', 'I', 'H', 'J'], 'H': ['A', 'E', 'J', 'F', 'I', 'B'], 'E': ['H', 'B', 'F', 'D'], 'B': ['E', 'C', 'A', 'D', 'H'], 'C': ['B', 'I', 'G'], 'G': ['I', 'C'], 'J': ['H', 'F']}
+
+TOTAL EXECUTION TIME: 0.10785746574401855s

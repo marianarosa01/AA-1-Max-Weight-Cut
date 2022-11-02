@@ -1,0 +1,23 @@
+GRAPH WITH 2 NODES 
+
+2 vertices: [['A', [15, 5]], ['B', [13, 7]]]
+1 edges : [['A', 'B']]
+
+Adjacency list: {'A': ['B'], 'B': ['A']}
+Weight list: {('A', 'B'): 3}
+WITH THE BRUTE FORCE ALGORITHM: 
+Maximum weight cut: 3
+Subset S: ['A']
+Subset T: ['B']
+NUMBER OF ITERATIONS: 2
+
+TOTAL EXECUTION TIME: 3.1948089599609375e-05s 
+
+WITH THE GREEDY ALGORITHM: 
+Maximum weight cut: 3
+Subset S: ['A']
+Subset T: ['B']
+NUMBER OF ITERATIONS: 0
+
+TOTAL EXECUTION TIME: 8.106231689453125e-06s
+
