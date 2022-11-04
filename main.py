@@ -53,7 +53,7 @@ def check_if_there_are_isolated_vertex(vertex,edges): #If there is any check iso
 
 
 
-def calc(vertices, edges):  # Calculate the weight of the edges
+def calc_weight_edges(vertices, edges):  # Calculate the weight of the edges
     dic_edges_count = {} #Example of dic_edges_count {('A', 'B'): 1, ('C', 'D'): 5}
     for e1, e2 in edges:
         for v in vertices:
@@ -73,10 +73,50 @@ def calculate_weight_cut (subsetS, subsetT, weight_list): #Calculate the weight 
             weight_sum += weight_list[edge]   
     return weight_sum
 
+
+
+def find_max_cut_brute_force(vertex, edges):
+    #Brute force algorithm
+    #We are going to find all the possible combinations of subsets S and T and then we are going to calculate the weight of the cut for each one of them
+    #The combination with the highest weight will be the one we are going to return
+
+    adj_list = adjacency_list(edges)
+    weights = calc_weight_edges(vertex, edges)
+    possible_cuts = []
+    dic_cut_weight = {}
+    iterations = 0
+    graph_vertex = list(adj_list.keys())
+    graph_vertex_number = len(list(adj_list.keys()))
+
+    for i in range(1, int(graph_vertex_number/2)+1): #We are going to find all the possible combinations of subsets S 
+        combs = combinations(graph_vertex, i)
+        if possible_cuts == []:
+            possible_cuts = [','.join(comb) for comb in combs]
+        else:
+            possible_cuts = [','.join(comb) for comb in combs] + possible_cuts
+
+    for cut in possible_cuts:
+        iterations += 1
+        chosen_cut = cut.split(',')
+        subset_s = chosen_cut
+        subset_t = [v for v in graph_vertex if v not in chosen_cut] #Subset T is going to be all the vertices that are not in subset S
+        weights_temp = weights.copy() #this copy is unnecessary, but I did it to make sure that the weights were not being changed
+        cut_weight = calculate_weight_cut(subset_s, subset_t, weights_temp) #Calculate the weight of the cut (S->T)
+        dic_cut_weight[cut] = cut_weight
+        
+
+    max_cut_vertices = max(dic_cut_weight, key=dic_cut_weight.get)
+    subset_s = list(max_cut_vertices.split(','))
+    subset_t = list(set(graph_vertex) - set(subset_s))
+    max_cut_value = dic_cut_weight[max_cut_vertices]
+
+    return max_cut_value, subset_s, subset_t, iterations
+
+    
 def find_max_cut_greedy(vertex, edges): #Greedy algorithm
 
 
-    weights = calc(vertex, edges)
+    weights = calc_weight_edges(vertex, edges)
     sorted_weights = {edge: cost for edge, cost in sorted(weights.items(), key=lambda item: item[1], reverse=True)}
 
     #The heuristic used in these case was to find first the edges with the highest weight and put one vertex in subset S and another one in T
@@ -126,7 +166,7 @@ def plot_cut(vertices, edges, cuts,filepath,algorithm):
     n_vertex = len(vertices)
     n_edges = len(edges)
 
-    weight_edges = calc(vertices, edges)
+    weight_edges = calc_weight_edges(vertices, edges)
     G = nx.Graph()
 
     color_map = []
@@ -155,43 +195,6 @@ def plot_cut(vertices, edges, cuts,filepath,algorithm):
         plt.close()
 
 
-def find_max_cut_brute_force(vertex, edges):
-    #Brute force algorithm
-    #We are going to find all the possible combinations of subsets S and T and then we are going to calculate the weight of the cut for each one of them
-    #The combination with the highest weight will be the one we are going to return
-
-    adj_list = adjacency_list(edges)
-    weights = calc(vertex, edges)
-    possible_cuts = []
-    dic_cut_weight = {}
-    iterations = 0
-    graph_vertex = list(adj_list.keys())
-    graph_vertex_number = len(list(adj_list.keys()))
-
-    for i in range(1, int(graph_vertex_number/2)+1):
-        combs = combinations(graph_vertex, i)
-        if possible_cuts == []:
-            possible_cuts = [','.join(comb) for comb in combs]
-        else:
-            possible_cuts = [','.join(comb) for comb in combs] + possible_cuts
-
-    for cut in possible_cuts:
-        iterations += 1
-        chosen_cut = cut.split(',')
-        subset_s = chosen_cut
-        subset_t = [v for v in graph_vertex if v not in chosen_cut]
-        weights_temp = weights.copy()
-        cut_weight = calculate_weight_cut(subset_s, subset_t, weights_temp)
-        dic_cut_weight[cut] = cut_weight
-        
-
-    max_cut_vertices = max(dic_cut_weight, key=dic_cut_weight.get)
-    subset_s = list(max_cut_vertices.split(','))
-    subset_t = list(set(graph_vertex) - set(subset_s))
-    max_cut_value = dic_cut_weight[max_cut_vertices]
-
-    return max_cut_value, subset_s, subset_t, iterations
-
 
 
 def save_solution(vertex, edges, filepath):     #Save the solution in a txt file
@@ -200,7 +203,7 @@ def save_solution(vertex, edges, filepath):     #Save the solution in a txt file
     name_file = "max_cut_"+str(len(vertex))+"_vertex_" + \
         str(len(edges))+"_edges"+".txt"
     adj_list = adjacency_list(edges)
-    weights = calc(vertex, edges)
+    weights = calc_weight_edges(vertex, edges)
     if check_if_there_are_isolated_vertex(vertex, edges) == True:
         print("The problem is not solvable")
         with open(os.path.join(filepath, name_file), "w") as f:
@@ -296,5 +299,13 @@ print("Maximum weight cut: ", results_greedy[0])
 print("Subset S: ", results_greedy[1])
 print("Subset T: ", results_greedy[2])
 print("Number of iterations: ", results_greedy[3])
-
 """
+# Example 3 (Test for a graph with many vertices to see time of execution)
+start_time_brute = time.time()
+big_vertices = [["A", [6, 15]], ["B", [13, 6]], ["C", [14, 19]], ["D", [18, 15]], ["E", [13, 6]], ["F", [16, 1]], ["G", [6, 19]], ["H", [8, 18]], ["I", [8, 14]], ["J", [20, 1]], ["K", [18, 5]], ["L", [12, 6]], ["M", [11, 3]], ["N", [1, 8]], ["O", [6, 17]], ["P", [1, 6]], ["Q", [7, 16]], ["R", [9, 7]], ["S", [3, 8]], ["T", [13, 16]], ["U", [14, 10]], ["V", [13, 10]], ["W", [20, 19]], ["X", [9, 3]], ["Y", [1, 20]]]
+big_edges =  [["K", "A"], ["R", "I"], ["E", "G"], ["A", "V"], ["N", "D"], ["B", "X"], ["Y", "U"], ["U", "J"], ["T", "P"], ["E", "X"], ["G", "X"], ["F", "Q"], ["S", "X"], ["H", "C"], ["D", "V"], ["H", "P"], ["S", "D"], ["T", "O"], ["T", "B"], ["C", "Y"], ["A", "D"], ["N", "I"], ["M", "P"], ["F", "Y"], ["U", "L"], ["Y", "D"], ["L", "W"], ["I", "K"], ["C", "R"], ["Q", "K"], ["M", "F"], ["F", "U"], ["K", "H"], ["H", "B"], ["N", "H"], ["M", "U"], ["F", "V"], ["F", "X"], ["H", "V"], ["M", "Q"], ["H", "A"], ["T", "W"], ["G", "S"], ["M", "R"], ["S", "K"], ["G", "N"], ["T", "R"], ["B", "C"], ["U", "O"], ["G", "K"], ["A", "C"], ["N", "A"], ["D", "C"], ["D", "L"], ["L", "V"], ["N", "L"], ["X", "L"], ["E", "W"], ["E", "V"], ["J", "P"], ["A", "X"], ["P", "K"], ["L", "F"], ["H", "F"], ["I", "O"], ["H", "Y"], ["P", "U"], ["Q", "A"], ["J", "K"], ["P", "Q"], ["F", "S"], ["I", "F"], ["U", "I"], ["B", "R"], ["U", "H"], ["T", "L"], ["B", "A"], ["E", "O"], ["O", "C"], ["C", "M"], ["W", "D"], ["O", "A"], ["V", "S"], ["Q", "E"], ["I", "G"], ["D", "E"], ["X", "U"], ["O", "Q"], ["Q", "X"], ["X", "I"], ["G", "R"], ["Q", "T"], ["H", "S"], ["I", "S"], ["O", "P"], ["J", "H"], ["D", "P"], ["K", "B"], ["Y", "N"], ["D", "K"], ["L", "C"], ["B", "V"], ["U", "G"], ["N", "P"], ["K", "C"], ["L", "G"], ["E", "H"], ["M", "W"], ["U", "Q"], ["N", "R"], ["L", "K"], ["V", "W"], ["V", "P"], ["M", "X"], ["F", "O"], ["A", "I"], ["W", "U"], ["B", "P"], ["T", "K"], ["L", "Q"], ["F", "C"], ["A", "W"], ["J", "I"], ["G", "V"], ["K", "Y"], ["V", "Q"], ["Q", "C"], ["Q", "S"], ["A", "T"], ["C", "U"], ["V", "X"], ["S", "W"], ["S", "O"], ["L", "S"], ["I", "C"], ["V", "M"], ["X", "R"], ["Y", "P"], ["A", "R"], ["O", "V"], ["J", "Y"], ["O", "N"], ["K", "E"], ["N", "B"], ["J", "W"], ["K", "M"], ["G", "C"], ["E", "S"], ["N", "T"], ["T", "E"], ["R", "J"], ["Q", "W"], ["I", "T"], ["I", "V"], ["K", "O"], ["U", "D"], ["A", "Y"], ["M", "I"], ["L", "E"], ["W", "B"], ["S", "A"], ["A", "G"], ["G", "W"], ["E", "P"], ["I", "W"], ["Y", "R"], ["G", "P"], ["C", "V"], ["Q", "N"], ["Y", "M"], ["I", "E"], ["N", "J"], ["S", "T"], ["H", "T"], ["F", "G"], ["M", "S"], ["O", "J"], ["B", "S"], ["K", "V"], ["V", "Y"], ["J", "L"], ["A", "L"], ["M", "T"], ["J", "A"], ["P", "A"], ["J", "Q"], ["R", "Q"], ["F", "D"], ["R", "D"], ["O", "M"], ["C", "W"], ["Y", "I"], ["C", "N"], ["Y", "G"], ["X", "O"], ["E", "B"], ["X", "K"], ["J", "C"], ["J", "X"], ["E", "U"], ["P", "L"], ["E", "C"], ["I", "D"], ["X", "T"], ["X", "P"], ["N", "U"], ["J", "E"]]
+print("running")
+print(len(big_vertices))
+print(len(big_edges))
+end_time_brute = time.time()
+
